@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Multither 2.0: Multiply and Play!</title>
+  <link rel="icon" href="gameLogo.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-shell">
+        <section id="startScreen" class="screen start-screen">
+      <div class="hero-card pupil-hero neon-hero">
+        <div class="floating-math" aria-hidden="true">
+          <span class="math-a">2</span>
+          <span class="math-b">×</span>
+          <span class="math-c">4</span>
+          <span class="math-d">5</span>
+          <span class="math-e">7</span>
+          <span class="math-f">+</span>
+        </div>
+
+        <div class="hero-main-layout">
+          <div class="hero-copy-block">
+            <h1 id="gameTitle" class="sr-only">MULTITHER 2.0</h1>
+            <p id="tagline" class="tagline hero-tagline">Multither 2.0: Multiply and Play!</p>
+            <p id="gamePurpose" class="purpose-text hero-purpose">
+              Steer the snake, find the answer apple, and build multiplication fluency one bite at a time.
+            </p>
+          </div>
+
+          <div class="brand-header logo-stack hero-logo-wrap">
+            <img src="gameLogo.png" alt="MULTITHER 2.0 game logo" class="menu-logo hero-logo" />
+          </div>
+        </div>
+      </div>
+
+      <div class="start-content-grid neon-start-layout">
+        <section class="panel language-first-panel neon-panel" aria-label="Language selection">
+          <div class="panel-heading">
+            <span class="panel-number">1</span>
+            <div>
+              <h2 id="languageFirstTitle">Tick the Language First / 先勾选语言</h2>
+              <p id="languageFirstSubtitle" class="panel-subtitle">Tick your language before reading How to Play. / 阅读玩法说明前，请先勾选语言。</p>
+            </div>
+          </div>
+
+          <div class="language-first-choice" role="group" aria-labelledby="languageLabel">
+            <div class="language-choice-icon" aria-hidden="true">🌐</div>
+            <div class="language-choice-content">
+              <span id="languageLabel" class="language-choice-label">Language / 语言</span>
+              <div class="language-option-grid">
+                <button type="button" class="language-option" data-lang-option="en" aria-pressed="false">
+                  <span class="language-option-name">English</span>
+                  <span class="language-option-tick" aria-hidden="true">✓</span>
+                </button>
+                <button type="button" class="language-option" data-lang-option="zh" aria-pressed="false">
+                  <span class="language-option-name">中文</span>
+                  <span class="language-option-tick" aria-hidden="true">✓</span>
+                </button>
+              </div>
+              <select id="languageSelect" class="sr-only-input" aria-hidden="true" tabindex="-1">
+                <option value="en">English</option>
+                <option value="zh">中文</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel rules-panel neon-panel">
+          <div class="panel-heading">
+            <span class="panel-number">2</span>
+            <div>
+              <h2 id="rulesTitle">How to Play</h2>
+              <p id="rulesSubtitle" class="panel-subtitle">Read first, move calmly, and aim for the correct apple.</p>
+            </div>
+          </div>
+          <ol id="rulesList"></ol>
+
+          <div class="control-tip neon-tip" aria-label="Control instruction">
+            <span class="control-tip-icon" aria-hidden="true">⌨️</span>
+            <strong id="controlCardTitle">Control</strong>
+            <span id="controlCardText">Use Arrow Keys or WASD keys. On tablets/phones, use the on-screen buttons.</span>
+          </div>
+        </section>
+
+        <section class="panel settings-panel neon-panel" aria-label="Game settings">
+          <div class="panel-heading">
+            <span class="panel-number">3</span>
+            <div>
+              <h2 id="setupTitle">Set Up Your Game</h2>
+              <p id="setupSubtitle" class="panel-subtitle">Choose your details, level, mode and speed.</p>
+            </div>
+          </div>
+
+          <div class="setting-section neon-section">
+            <h3 id="identityTitle">Pupil Details</h3>
+            <div class="setting-grid identity-grid icon-grid">
+
+              <label class="setting-group setting-group-icon icon-pupil">
+                <span id="playerNameLabel">Pupil name</span>
+                <input id="playerNameInput" type="text" maxlength="40" placeholder="Optional" />
+              </label>
+
+              <label class="setting-group setting-group-icon icon-class">
+                <span id="classLabel">Class</span>
+                <input id="classInput" type="text" maxlength="30" placeholder="Optional" />
+              </label>
+            </div>
+          </div>
+
+          <div class="setting-section neon-section">
+            <h3 id="gameChoicesTitle">Game Choices</h3>
+            <div class="setting-grid game-choice-grid icon-grid">
+              <label class="setting-group setting-group-icon icon-mode">
+                <span id="modeLabel">Mode</span>
+                <select id="modeSelect">
+                  <option value="practice">Practice Mode</option>
+                  <option value="challenge">Challenge Mode</option>
+                </select>
+              </label>
+
+              <label class="setting-group setting-group-icon icon-table">
+                <span id="levelLabel">Times table</span>
+                <select id="levelSelect">
+                  <option value="2">Table 2</option>
+                  <option value="3">Table 3</option>
+                  <option value="4">Table 4</option>
+                  <option value="5">Table 5</option>
+                  <option value="6">Table 6</option>
+                  <option value="7">Table 7</option>
+                  <option value="8">Table 8</option>
+                  <option value="9">Table 9</option>
+                  <option value="focus34">Tables 3 &amp; 4</option>
+                  <option value="focus67">Tables 6 &amp; 7</option>
+                  <option value="focus89">Tables 8 &amp; 9</option>
+                  <option value="mixed">Mixed Tables 2–9</option>
+                </select>
+              </label>
+
+              <label class="setting-group setting-group-icon icon-speed">
+                <span id="speedLabel">Snake speed</span>
+                <select id="speedSelect">
+                  <option value="720">Slow</option>
+                  <option value="520" selected>Moderate</option>
+                  <option value="360">Fast</option>
+                  <option value="260">Very Fast</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <div class="button-row start-action-row neon-buttons">
+            <button id="startBtn" class="primary-btn">Start Game</button>
+            <button id="muteBtn" class="secondary-btn sound-btn" aria-label="Sound">🔇 Sound</button>
+          </div>
+          <p id="teacherHint" class="teacher-hint">
+            Classroom note: Practice Mode stops automatically after 30 questions. Pupils may stop after at least 10 questions.
+          </p>
+        </section>
+
+        <section class="panel live-scoreboard-panel neon-panel" aria-label="Live online scoreboard">
+          <div class="panel-heading">
+            <span class="panel-number">4</span>
+            <div>
+              <h2 id="liveScoreboardTitle">Live Scoreboard</h2>
+              <p id="liveScoreboardSubtitle" class="panel-subtitle">Online ranking appears here after Firebase is connected.</p>
+            </div>
+          </div>
+
+          <div class="scoreboard-toolbar">
+            <span id="scoreboardStatus" class="scoreboard-status offline">Offline setup mode</span>
+            <button id="scoreboardRefreshBtn" type="button" class="secondary-btn mini-btn">Refresh</button>
+          </div>
+
+          <div class="scoreboard-table-wrap">
+            <table class="scoreboard-table" aria-describedby="scoreboardStatus">
+              <thead>
+                <tr>
+                  <th id="scoreRankHead">Rank</th>
+                  <th id="scorePupilHead">Pupil</th>
+                  <th id="scoreClassHead">Class</th>
+                  <th id="scoreScoreHead">Score</th>
+                  <th id="scoreAccuracyHead">Accuracy</th>
+                  <th id="scoreSpeedHead">Speed</th>
+                  <th id="scoreTableHead">Table</th>
+                </tr>
+              </thead>
+              <tbody id="scoreboardBody">
+                <tr><td colspan="7">Connect Firebase to show live results.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p id="scoreboardPrivacyNote" class="scoreboard-note">Use pupil codes or nicknames rather than full names when playing online.</p>
+        </section>
+
+      </div>
+    </section>
+
+    <section id="gameScreen" class="screen game-screen hidden">
+      <header class="topbar">
+        <div class="stat-pill" id="score">Score: 0</div>
+        <div class="question-card">
+          <div class="question-row">
+            <div id="question">Loading...</div>
+            <div id="correctAnswerBubble" class="answer-bubble hidden" aria-live="polite"></div>
+          </div>
+          <div id="feedback" aria-live="polite"></div>
+        </div>
+        <div class="stat-pill" id="timer">Time Left: 60s</div>
+      </header>
+
+      <div id="countdownOverlay" class="countdown-overlay hidden" aria-live="assertive" aria-hidden="true">
+        <div class="countdown-card">
+          <div id="countdownText" class="countdown-text">5</div>
+          <div id="countdownSubtext" class="countdown-subtext">Get ready!</div>
+        </div>
+      </div>
+
+      <div id="answerBurst" class="answer-burst hidden" aria-live="polite" aria-hidden="true"></div>
+
+      <div class="game-layout">
+        <canvas id="gameCanvas" width="768" height="576" aria-label="Multiplication snake game board"></canvas>
+
+        <aside class="side-panel">
+          <h2 id="learningTitle">Learning Tracker</h2>
+          <div class="tracker-row"><span id="attemptsLabel">Attempts</span><strong id="attemptsValue">0</strong></div>
+          <div class="tracker-row"><span id="correctLabel">Correct</span><strong id="correctValue">0</strong></div>
+          <div class="tracker-row"><span id="accuracyLabel">Accuracy</span><strong id="accuracyValue">0%</strong></div>
+          <div class="tracker-row"><span id="streakLabel">Streak</span><strong id="streakValue">0</strong></div>
+          <div class="button-stack">
+            <button id="pauseBtn" class="secondary-btn">Pause</button>
+            <button id="endBtn" class="danger-btn">End Game</button>
+          </div>
+        </aside>
+      </div>
+
+      <nav class="mobile-controls" aria-label="Mobile movement controls">
+        <button data-dir="up">▲</button>
+        <div>
+          <button data-dir="left">◀</button>
+          <button data-dir="down">▼</button>
+          <button data-dir="right">▶</button>
+        </div>
+      </nav>
+    </section>
+
+    <section id="endScreen" class="screen end-screen hidden">
+      <section class="result-card">
+        <h2 id="gameOverTitle">Game Over</h2>
+        <div id="starRating" class="star-rating">☆☆☆</div>
+        <p id="masteryMessage" class="mastery-message"></p>
+
+        <div class="result-grid">
+          <div class="result-box score-box">
+            <h3 id="gameScoreTitle">Game Score</h3>
+            <p id="finalScore"></p>
+          </div>
+          <div class="result-box">
+            <h3 id="learningPerformanceTitle">Learning Performance</h3>
+            <p id="finalAccuracy"></p>
+          </div>
+        </div>
+
+        <p id="recommendation" class="recommendation"></p>
+
+        <section class="result-live-scoreboard" aria-label="Live online scoreboard after game">
+          <div class="scoreboard-toolbar">
+            <strong id="endLiveScoreboardTitle">Live Scoreboard</strong>
+            <span id="endScoreboardStatus" class="scoreboard-status offline">Offline setup mode</span>
+            <button id="endScoreboardRefreshBtn" type="button" class="secondary-btn mini-btn">Refresh</button>
+          </div>
+          <div class="scoreboard-table-wrap compact">
+            <table class="scoreboard-table" aria-describedby="endScoreboardStatus">
+              <thead>
+                <tr>
+                  <th id="endScoreRankHead">Rank</th>
+                  <th id="endScorePupilHead">Pupil</th>
+                  <th id="endScoreClassHead">Class</th>
+                  <th id="endScoreScoreHead">Score</th>
+                  <th id="endScoreAccuracyHead">Accuracy</th>
+                  <th id="endScoreSpeedHead">Speed</th>
+                  <th id="endScoreTableHead">Table</th>
+                </tr>
+              </thead>
+              <tbody id="endScoreboardBody">
+                <tr><td colspan="7">Connect Firebase to show live results.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <div class="button-row">
+          <button id="restartBtn" class="primary-btn">Play Again</button>
+          <button id="backToMenuBtn" class="secondary-btn">Back to Menu</button>
+          <button id="exportBtn" class="secondary-btn">Export CSV</button>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <audio id="bgMusic" src="SlitheringNumbers.mp3" loop preload="auto"></audio>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
