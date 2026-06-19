@@ -3,7 +3,7 @@
 */
 
 window.MULTITHER_FIREBASE_CONFIG = {
-  apiKey: "AIzaSyB8PEWhP3CWoTGvHvMPlp8RPltKWCNVS5Q",
+  apiKey: "AIzaSyBEaUyLAk6pXBB2auQ6ieJ1FAErw6uzfCs",
   authDomain: "multither2-live-scoreboard.firebaseapp.com",
   databaseURL: "https://multither2-live-scoreboard-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "multither2-live-scoreboard",
