@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MULTITHER Firebase Auth Debug Test</title>
+  <style>
+    body{font-family:Arial,sans-serif;max-width:900px;margin:30px auto;padding:0 16px;line-height:1.45;background:#f7fff7;color:#102a20}
+    h1{color:#6c35ff}.card{background:white;border:1px solid #cfe8d4;border-radius:16px;padding:18px;margin:14px 0;box-shadow:0 8px 25px #0001}
+    label{display:block;font-weight:bold;margin-top:10px}input{width:100%;box-sizing:border-box;padding:12px;border:2px solid #90d190;border-radius:10px;font-size:16px}
+    button{margin-top:14px;padding:12px 18px;border:0;border-radius:10px;background:#278a47;color:white;font-weight:bold;cursor:pointer}
+    pre{background:#102a20;color:#d7ffd9;padding:14px;border-radius:10px;white-space:pre-wrap;overflow:auto}.bad{color:#b00020;font-weight:bold}.ok{color:#087a24;font-weight:bold}
+  </style>
+</head>
+<body>
+  <h1>MULTITHER Firebase Auth Debug Test</h1>
+  <div class="card">
+    <p>This page checks whether Firebase Authentication works on the current website.</p>
+    <p><b>Current page:</b> <span id="pageUrl"></span></p>
+    <p><b>Origin:</b> <span id="origin"></span></p>
+    <p><b>Hostname:</b> <span id="hostname"></span></p>
+  </div>
+  <div class="card">
+    <label>Email</label>
+    <input id="email" type="email" value="catherinekiu@gmail.com" />
+    <label>Password</label>
+    <input id="password" type="password" />
+    <button id="testBtn">Test Firebase Login</button>
+    <button id="signOutBtn" style="background:#777">Sign Out</button>
+  </div>
+  <div class="card">
+    <h2>Result</h2>
+    <pre id="log">Loading scripts...</pre>
+  </div>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script>
+    const logEl = document.getElementById('log');
+    function log(msg){ logEl.textContent += "\n" + msg; }
+    function resetLog(msg){ logEl.textContent = msg; }
+    function timeout(promise, ms){
+      let id;
+      const t = new Promise((_, reject)=> id=setTimeout(()=>reject(new Error('TIMEOUT after '+ms+'ms. Firebase Auth request is blocked or not returning.')), ms));
+      return Promise.race([promise,t]).finally(()=>clearTimeout(id));
+    }
+    document.getElementById('pageUrl').textContent = location.href;
+    document.getElementById('origin').textContent = location.origin;
+    document.getElementById('hostname').textContent = location.hostname;
+    try{
+      const cfg = window.MULTITHER_FIREBASE_CONFIG;
+      resetLog('Firebase scripts loaded.\nProject: '+ cfg.projectId +'\nAuth domain: '+ cfg.authDomain +'\nDatabase URL: '+ cfg.databaseURL);
+      if(!firebase.apps.length) firebase.initializeApp(cfg);
+      log('Firebase app initialised OK.');
+      firebase.auth().onAuthStateChanged(user => {
+        log('Auth state changed: ' + (user ? ('SIGNED IN as '+user.email+' UID='+user.uid) : 'not signed in'));
+      });
+    }catch(e){
+      resetLog('Initialisation error: '+ (e.code || '') + ' ' + e.message);
+      console.error(e);
+    }
+    document.getElementById('testBtn').onclick = async () => {
+      resetLog('Testing login...');
+      try{
+        const email=document.getElementById('email').value.trim();
+        const pass=document.getElementById('password').value;
+        const cred = await timeout(firebase.auth().signInWithEmailAndPassword(email, pass), 15000);
+        log('LOGIN SUCCESS. UID: '+ cred.user.uid);
+        try{
+          const adminSnap = await timeout(firebase.database().ref('roles/admins/'+cred.user.uid).once('value'), 10000);
+          log('Admin role value: '+ JSON.stringify(adminSnap.val()));
+        }catch(dbErr){
+          log('Database role check error: '+ (dbErr.code || '') + ' ' + dbErr.message);
+        }
+      }catch(e){
+        log('LOGIN ERROR: '+ (e.code || '') + ' ' + e.message);
+        log('\nIf TIMEOUT: temporarily set Google Cloud API key Application restrictions to None for one test. If login works after that, your website restriction pattern is the cause.');
+        console.error(e);
+      }
+    };
+    document.getElementById('signOutBtn').onclick = async () => {
+      await firebase.auth().signOut();
+      log('Signed out.');
+    };
+  </script>
+</body>
+</html>
