@@ -1,0 +1,33 @@
+MULTITHER 2.0 v51 - Offline, Online and Teacher Export Note
+===========================================================
+
+Offline Mode
+------------
+- Works without internet.
+- Scores are saved in the current browser/device.
+- Teacher may export local CSV from the result screen.
+- Suitable for weak internet classrooms.
+
+Online Mode
+-----------
+- Uses GitHub Pages + Firebase.
+- Pupils do not need to log in.
+- Scores are submitted to live leaderboard.
+- Ranking is grouped fairly by School + Class + Mode + Times Table.
+- Protected online records are saved for teacher/admin CSV export.
+
+Teacher/Admin Export
+--------------------
+- Teachers/admin login using Firebase Authentication.
+- Teacher can export current group data for assigned school.
+- Admin can export all online records.
+- Admin role and teacher school access are managed in Firebase Realtime Database under the roles path.
+
+Recommended pupil identity
+--------------------------
+Use pupil code or nickname only:
+- 4A-01
+- P01
+- Group Tiger
+
+Do not use full pupil names online.
